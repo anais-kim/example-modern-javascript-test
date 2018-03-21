@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="/public/style.css">
 </head>
-<body onload="fetchBooks()">
+<body onload="fetchBooks('javascript')">
     <header>
         <h1>Books to learn javascript</h1>
     </header>
@@ -15,11 +15,12 @@
         <input type="text"
                id="search-keyword"
                placeholder="Search keyword with javascript"
+               onkeypress="searchBooks(event)"
         />
     </section>
     <section class="search-result">
-        <ul id="books">
-        </ul>
+        <ul id="bookmarks"></ul>
+        <ul id="books"></ul>
     </section>
     <footer>
         <span>Anais Kim</span>

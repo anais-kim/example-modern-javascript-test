@@ -65,7 +65,7 @@ header {
     padding-bottom: 32px;
 }
 
-#books li {
+.search-result li {
     margin-bottom: 16px;
     border: 1px solid #46505c;
     padding: 16px;
@@ -74,9 +74,22 @@ header {
     align-items: flex-start;
 }
 
-#books li:hover {
+.search-result li:hover {
     cursor: pointer;
-    border: 1px solid #FFFFFF;
+}
+
+.bookmark-title::after {
+    margin: 0 8px;
+    content: '|';
+    font-weight: bold;
+}
+
+.bookmark-title::after, .bookmark-authors {
+    color: #63717f;
+}
+
+.books li {
+    transition: opacity 1s ease;
 }
 
 .book-detail {

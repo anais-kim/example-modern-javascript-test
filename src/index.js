@@ -1,33 +1,39 @@
-function fetchBooks() {
-    fetch('https://www.googleapis.com/books/v1/volumes?q=javascript').then(res => {
-        if (res.ok) {
-            res.json().then((data) => {
-                console.log(data.items);
+import {Books} from "./components/Books";
+import {Bookmarks} from "./components/Bookmarks";
 
-                const books = document.getElementById('books');
-                books.innerHTML = '';
+function fetchBooks(keyword) {
+    new Books(keyword);
+}
 
-                for (const book of data.items) {
-                    const {imageLinks: {thumbnail}, title, authors, description} = book.volumeInfo;
+function searchBooks(event) {
+    if(event.key === 'Enter') {
+        const keyword = document.getElementById('search-keyword').value;
+        fetchBooks(keyword);
+    }
+}
 
-                    books.innerHTML += `<li>
-                            <img src="${thumbnail}"/>
-                            <div class="book-detail">
-                                <p class="book-title">${title}</p>
-                                <p class="book-authors">${authors}</p>
-                                <p class="book-description">${(description)? description : ''}</p>
-                            </div>
-                            <div class="bookmark-icons">
-                                 <i class="far fa-star"></i>
-                                 <!--<i class="fa fa-star"></i>-->
-                            </div>
-                            </li>`;
-                }
-            });
-        } else {
-            console.log('Cannot get book resources from Google Books.');
+function bookmark(e) {
+    const id = e.getAttribute('data-book-id');
+    const title = e.getAttribute('data-book-title');
+    const authors = e.getAttribute('data-book-authors');
+    document.getElementById('book-' + id).style.display = 'none';
+
+    new Bookmarks().add({id, title, authors});
+}
+
+function deleteBookmark(e) {
+    const id = e.getAttribute('data-bookmark-id');
+    document.getElementById('bookmark-' + id).remove();
+
+    const books = document.getElementsByClassName('book');
+    for (const book of books ) {
+        if (book.id === ('book-' + id)) {
+            document.getElementById('book-' + id).style.display = 'flex';
         }
-    });
+    }
 }
 
 window.fetchBooks = fetchBooks;
+window.searchBooks = searchBooks;
+window.bookmark = bookmark;
+window.deleteBookmark = deleteBookmark;
