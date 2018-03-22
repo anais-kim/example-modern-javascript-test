@@ -1,5 +1,5 @@
-import {fetchBooksByKeyword} from "../services/GoogleBookService";
-import {render} from "./Books";
+import {fetchBooksByKeyword} from "../services/google-book-service";
+import {renderBooks} from "./books";
 
 export function onKeyPressSearchKeyword(event) {
     if (event.key === 'Enter') {
@@ -10,5 +10,5 @@ export function onKeyPressSearchKeyword(event) {
 
 export function searchBooks(keyword) {
     const searchKeyword = 'javascript ' + ((keyword)? keyword : '') ;
-    fetchBooksByKeyword(searchKeyword).then(data => render(data.items));
+    fetchBooksByKeyword(searchKeyword).then(data => renderBooks(data.items));
 }

@@ -1,4 +1,4 @@
-import {showBookElementById} from "./Books";
+import {showBookElementById} from "./books";
 
 export function onClickRemoveBookmark(e) {
     const id = e.getAttribute('data-book-id');
@@ -7,13 +7,6 @@ export function onClickRemoveBookmark(e) {
 }
 
 export function addBookmark(book) {
-    render(book);
-}
-function removeBookmark(id) {
-    document.getElementById('bookmark-' + id).remove();
-}
-
-function render(book) {
     const bookmarksElement = document.getElementById('bookmarks');
 
     bookmarksElement.innerHTML += `
@@ -24,4 +17,8 @@ function render(book) {
                      <i class="fa fa-star"></i>
                 </div>
             </li>`;
+}
+
+function removeBookmark(id) {
+    document.getElementById('bookmark-' + id).remove();
 }

@@ -1,7 +1,7 @@
-import {onClickAddBookmark} from "./components/Books";
+import {onClickAddBookmark} from "./components/books";
 import {onKeyPressSearchKeyword,
-               searchBooks as onLoadBody} from "./components/Search";
-import {onClickRemoveBookmark} from "./components/Bookmarks";
+               searchBooks as onLoadBody} from "./components/search";
+import {onClickRemoveBookmark} from "./components/bookmarks";
 
 window.onLoadBody = onLoadBody;
 window.onKeyPressSearchKeyword = onKeyPressSearchKeyword;

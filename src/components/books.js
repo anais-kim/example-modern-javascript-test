@@ -1,4 +1,4 @@
-import {addBookmark} from "./Bookmarks";
+import {addBookmark} from "./bookmarks";
 
 export function onClickAddBookmark(e) {
     const id = e.getAttribute('data-book-id');
@@ -18,7 +18,7 @@ function hideBookElementById(id) {
     document.getElementById('book-' + id).style.display = 'none';
 }
 
-export function render(books) {
+export function renderBooks(books) {
     const booksElement = document.getElementById('books');
     booksElement.innerHTML = '';
 
