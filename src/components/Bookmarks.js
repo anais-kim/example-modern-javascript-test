@@ -1,23 +1,27 @@
-export class Bookmarks {
+import {showBookElementById} from "./Books";
 
-    constructor() {}
+export function onClickRemoveBookmark(e) {
+    const id = e.getAttribute('data-book-id');
+    removeBookmark(id);
+    showBookElementById(id);
+}
 
-    add(book) {
-        const {id, title, authors} = book;
-        const bookmarksElement = document.getElementById('bookmarks');
+export function addBookmark(book) {
+    render(book);
+}
+function removeBookmark(id) {
+    document.getElementById('bookmark-' + id).remove();
+}
 
-        bookmarksElement.innerHTML += `
-            <li id="bookmark-${id}">
-                 <span class="bookmark-title">${title}</span>
-                 <span class="bookmark-authors">${authors}</span>
-                <div class="bookmark-icons" data-bookmark-id="${id}" onclick="deleteBookmark(this)">
+function render(book) {
+    const bookmarksElement = document.getElementById('bookmarks');
+
+    bookmarksElement.innerHTML += `
+            <li id="bookmark-${book.id}">
+                 <span class="bookmark-title">${book.title}</span>
+                 <span class="bookmark-authors">${book.authors}</span>
+                <div class="bookmark-icons" data-book-id="${book.id}" onclick="onClickRemoveBookmark(this)">
                      <i class="fa fa-star"></i>
                 </div>
             </li>`;
-    }
-
-    delete(id) {
-        console.log(id);
-    }
-
 }
