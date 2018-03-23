@@ -4,11 +4,10 @@ import {renderBooks} from "./books";
 export function onKeyPressSearchKeyword(event) {
     if (event.key === 'Enter') {
         const keyword = document.getElementById('search-keyword').value;
-        searchBooks(keyword);
+        fetchBooksByKeyword('javascript' + ' ' + keyword).then(data => renderBooks(data.items));
     }
 }
 
-export function searchBooks(keyword) {
-    const searchKeyword = 'javascript ' + ((keyword)? keyword : '') ;
-    fetchBooksByKeyword(searchKeyword).then(data => renderBooks(data.items));
+export function searchBooksWithDefaultKeyword() {
+    fetchBooksByKeyword('javascript').then(data => renderBooks(data.items));
 }

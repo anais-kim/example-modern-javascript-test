@@ -4,7 +4,7 @@ export function onClickAddBookmark(e) {
     const id = e.getAttribute('data-book-id');
     const title = e.getAttribute('data-book-title');
     const authors = e.getAttribute('data-book-authors');
-    hideBookElementById(id);
+    document.getElementById('book-' + id).style.display = 'none';
 
     addBookmark({id, title, authors});
 }
@@ -12,10 +12,6 @@ export function onClickAddBookmark(e) {
 export function showBookElementById(id) {
     const book = document.getElementById('book-' + id);
     if (book) book.style.display = 'flex';
-}
-
-function hideBookElementById(id) {
-    document.getElementById('book-' + id).style.display = 'none';
 }
 
 export function renderBooks(books) {
