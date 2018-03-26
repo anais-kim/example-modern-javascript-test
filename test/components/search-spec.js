@@ -14,7 +14,7 @@ describe('Search', () => {
     beforeEach(() => {
         document.body.innerHTML = '<input id="search-keyword" value="test keyword">';
 
-        stubFetchBooksByKeyword = sinon.stub(GoogleBookService, 'fetchBooksByKeyword').returns(Promise.resolve(BOOKS));
+        stubFetchBooksByKeyword = sinon.stub(GoogleBookService, 'fetchBooksByKeyword').resolves(BOOKS);
         stubRenderBooks = sinon.stub(Books, 'renderBooks');
     });
 

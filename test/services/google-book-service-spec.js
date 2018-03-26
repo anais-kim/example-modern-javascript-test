@@ -14,7 +14,7 @@ describe('GoogleBookService', () => {
         beforeEach(async () => {
             fetchMock.get('*', BOOKS);
 
-            sinon.stub(ResponseHandler, 'handleResponse').returns(Promise.resolve(BOOKS));
+            sinon.stub(ResponseHandler, 'handleResponse').resolves(BOOKS);
 
             result = await GoogleBookService.fetchBooksByKeyword('keyword');
         });
