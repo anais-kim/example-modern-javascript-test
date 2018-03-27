@@ -2,6 +2,8 @@
 Simple javascript app searching books via GoogleBooks API, <br>
 testing with ***mocha, babel, chai, sinon, fetch-mock, jsdom, istanbul***
 
+![Overview Screenshot](/public/screenshot.png)
+
 ----------------
 ### Requirements
 - node & npm
