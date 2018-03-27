@@ -24,19 +24,20 @@ describe('Books', () => {
         });
 
         afterEach(() => {
-            stubAddBookmark.restore();
+            Bookmarks.addBookmark.restore();
         });
 
-        it('should change book element display style to be none', () => {
+        it('should change book element\'s display style to none', () => {
             onClickAddBookmark(fakeBookmarkIcon);
 
-            expect(document.getElementById(`book-${book.id}`).style.display).to.equal('none');
+            const bookElement = document.getElementById(`book-${book.id}`);
+            expect(bookElement.style.display).to.equal('none');
         });
 
         it('should call addBookmark with book information', () => {
             onClickAddBookmark(fakeBookmarkIcon);
 
-            expect(stubAddBookmark.calledWith(book)).to.be.true;
+            sinon.assert.calledWith(stubAddBookmark, book);
         });
     });
 
@@ -45,10 +46,11 @@ describe('Books', () => {
             document.body.innerHTML = '<li id="book-id" style="display: none;">';
         });
 
-        it('should change display style of book element if element is present', () => {
+        it('should change book element\'s display style to flex if element is present', () => {
             showBookElementById('id');
 
-            expect(document.getElementById('book-id').style.display).to.equal('flex');
+            const bookElement = document.getElementById('book-id');
+            expect(bookElement.style.display).to.equal('flex');
         });
     });
 

@@ -12,31 +12,33 @@ describe('Search', () => {
     let stubRenderBooks;
 
     beforeEach(() => {
-        document.body.innerHTML = '<input id="search-keyword" value="test keyword">';
-
         stubFetchBooksByKeyword = sinon.stub(GoogleBookService, 'fetchBooksByKeyword').resolves(BOOKS);
         stubRenderBooks = sinon.stub(Books, 'renderBooks');
     });
 
     afterEach(() => {
-        stubFetchBooksByKeyword.restore();
-        stubRenderBooks.restore();
+        GoogleBookService.fetchBooksByKeyword.restore();
+        Books.renderBooks.restore();
     });
 
     describe('#onKeyPressSearchKeyword', () => {
+        beforeEach(() => {
+            document.body.innerHTML = '<input id="search-keyword" value="test keyword">';
+        });
+
         describe('when enter key pressed', () => {
             const fakeEvent = {key: 'Enter'};
 
-            it('should call fetchBooksByKeyword with "javascript" and input value', () => {
+            it('should call fetchBooksByKeyword with "javascript" + input value', () => {
                 onKeyPressSearchKeyword(fakeEvent);
 
-                expect(stubFetchBooksByKeyword.calledWith('javascript test keyword')).to.be.true;
+                sinon.assert.calledWith(stubFetchBooksByKeyword, 'javascript test keyword');
             });
 
             it('should call renderBooks with returned data items', async () => {
                 await onKeyPressSearchKeyword(fakeEvent);
 
-                expect(stubRenderBooks.calledWith(BOOKS.items)).to.be.true;
+                sinon.assert.calledWith(stubRenderBooks, BOOKS.items);
             });
         });
 
@@ -46,13 +48,13 @@ describe('Search', () => {
             it('should not call fetchBooksByKeyword', () => {
                 onKeyPressSearchKeyword(fakeEvent);
 
-                expect(stubFetchBooksByKeyword.called).to.be.false;
+                sinon.assert.notCalled(stubFetchBooksByKeyword);
             });
 
             it('should not call renderBooks', async  () => {
                 await onKeyPressSearchKeyword(fakeEvent);
 
-                expect(stubRenderBooks.called).to.be.false;
+                sinon.assert.notCalled(stubRenderBooks);
             });
         });
     });
@@ -61,13 +63,13 @@ describe('Search', () => {
         it('should call fetchBooksByKeyword with "javascript"', () => {
             searchBooksWithDefaultKeyword();
 
-            expect(stubFetchBooksByKeyword.calledWith('javascript')).to.be.true;
+            sinon.assert.calledWith(stubFetchBooksByKeyword, 'javascript');
         });
 
         it('should call renderBooks with returned data items', async () => {
             await searchBooksWithDefaultKeyword();
 
-            expect(stubRenderBooks.calledWith(BOOKS.items)).to.be.true;
+            sinon.assert.calledWith(stubRenderBooks, BOOKS.items);
         });
     });
 });

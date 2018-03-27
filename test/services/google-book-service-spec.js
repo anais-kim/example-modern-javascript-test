@@ -26,7 +26,10 @@ describe('GoogleBookService', () => {
         it('should call handleResponse with fetched response', async () => {
             await GoogleBookService.fetchBooksByKeyword('keyword');
 
-            expect(ResponseHandler.handleResponse.calledWith(sinon.match.object)).to.be.true;
+            sinon.assert.calledWith(ResponseHandler.handleResponse, sinon.match({
+                "ok": true,
+                "body": sinon.match.string
+            }));
         });
 
         it('should return result', async () => {

@@ -7,33 +7,32 @@ describe('Bookmarks', () => {
     describe('#onClickRemoveBookmark', () => {
         const fakeElement = {
             getAttribute: () => {
-                return 'id'
+                return 'fakeBookId'
             }
         };
 
-        let stubShowBookElementById;
+        let spyShowBookElementById;
 
         beforeEach(() => {
-            document.body.innerHTML = '<li id="bookmark-id">';
-
-            stubShowBookElementById = sinon.stub(Books, 'showBookElementById');
+            document.body.innerHTML = '<li id="bookmark-fakeBookId">';
+            spyShowBookElementById = sinon.spy(Books, 'showBookElementById');
         });
 
         afterEach(() => {
-            stubShowBookElementById.restore();
+            Books.showBookElementById.restore();
         });
 
         it('should remove bookmark element with book id', () => {
             onClickRemoveBookmark(fakeElement);
 
-            const bookmarkElement = document.getElementById('bookmark-id');
+            const bookmarkElement = document.getElementById('bookmark-fakeBookId');
             expect(bookmarkElement).to.be.null;
         });
 
         it('should call showBookElementById with book id', () => {
             onClickRemoveBookmark(fakeElement);
 
-            expect(stubShowBookElementById.calledWith('id')).to.be.true;
+            sinon.assert.calledWith(spyShowBookElementById, 'fakeBookId');
         });
     });
 
