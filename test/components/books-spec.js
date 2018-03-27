@@ -19,7 +19,7 @@ describe('Books', () => {
             fakeBookmarkIcon = new JSDOM(`<div data-book-id="${book.id}" data-book-title="${book.title}" data-book-authors="${book.authors}"></div>`)
                 .window.document.querySelector('div');
 
-            document.body.innerHTML = '<li id="book-id">';
+            document.body.innerHTML = '<li id="book-id"></li>';
             stubAddBookmark = sinon.stub(Bookmarks, 'addBookmark');
         });
 

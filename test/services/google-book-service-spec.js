@@ -2,40 +2,39 @@ import fetchMock from 'fetch-mock';
 import sinon from "sinon";
 import {expect} from 'chai';
 import * as GoogleBookService from '../../src/services/google-book-service'
-import * as ResponseHandler from '../../src/services/response-handler';
 
 describe('GoogleBookService', () => {
     describe('#fetchBooksBykeyword', () => {
         beforeEach(() => {
-            fetchMock.get('*', {items: [{title: 'book1'}, {title: 'book2'}]});
-            sinon.spy(ResponseHandler, 'handleResponse');
+            fetchMock.get('end:javascript', {items: [{title: 'javascript book1'}, {title: 'javascript book2'}]});
+            fetchMock.get('*', 400);
+
+            sinon.stub(console, 'log');
         });
 
         afterEach(() => {
             fetchMock.restore();
-            ResponseHandler.handleResponse.restore();
+
+            console.log.restore();
         });
 
-        it('should fetch volume api with query parameter', async () => {
-            await GoogleBookService.fetchBooksByKeyword('keyword');
+        it('should fetch GET /volumes api with query parameter keyword', async () => {
+            await GoogleBookService.fetchBooksByKeyword('javascript');
 
-            const url = fetchMock.calls()[0][0];
-            expect(url).to.equal('https://www.googleapis.com/books/v1/volumes?q=keyword');
+            const url = fetchMock.lastCall()[0];
+            expect(url).to.equal('https://www.googleapis.com/books/v1/volumes?q=javascript');
         });
 
-        it('should call handleResponse with fetched response', async () => {
-            await GoogleBookService.fetchBooksByKeyword('keyword');
+        it('should return json response body when status is okay', async () => {
+            const result = await GoogleBookService.fetchBooksByKeyword('javascript');
 
-            sinon.assert.calledWith(ResponseHandler.handleResponse, sinon.match({
-                "ok": true,
-                "body": sinon.match.string
-            }));
+            expect(result).to.deep.equal({items: [{title: 'javascript book1'}, {title: 'javascript book2'}]});
         });
 
-        it('should return result', async () => {
-            const result = await GoogleBookService.fetchBooksByKeyword('keyword');
+        it('should call console.log with response when status is not okay', async () => {
+            await GoogleBookService.fetchBooksByKeyword('failure keyword');
 
-            expect(result).to.deep.equal({items: [{title: 'book1'}, {title: 'book2'}]});
+            sinon.assert.calledWith(console.log, sinon.match.has('status', 400));
         });
     })
 })
