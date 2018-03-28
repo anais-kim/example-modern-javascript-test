@@ -14,7 +14,7 @@ describe('Bookmarks', () => {
         let spyShowBookElementById;
 
         beforeEach(() => {
-            document.body.innerHTML = '<li id="bookmark-fakeBookId">';
+            document.body.innerHTML = '<li id="bookmark-fakeBookId"></li>';
             spyShowBookElementById = sinon.spy(Books, 'showBookElementById');
         });
 
